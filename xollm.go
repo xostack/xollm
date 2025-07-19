@@ -72,4 +72,19 @@ type Client interface {
 	// the underlying provider. The returned name should be a lowercase, stable
 	// identifier that matches the provider's configuration key.
 	ProviderName() string
+
+	// Close cleans up any resources used by the client.
+	//
+	// This method should be called when the client is no longer needed to ensure
+	// proper cleanup of connections, goroutines, and other resources. The method
+	// should be idempotent - calling it multiple times should be safe.
+	//
+	// For providers that don't require cleanup (e.g., those using standard HTTP
+	// clients), this can be a no-op, but the method must still be present to
+	// satisfy the interface.
+	//
+	// Returns an error if cleanup fails, though in most cases this should
+	// return nil. Callers should log cleanup errors but generally not treat
+	// them as fatal.
+	Close() error
 }

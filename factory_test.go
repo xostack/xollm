@@ -301,3 +301,95 @@ func TestGetClient_WithCustomModels(t *testing.T) {
 		})
 	}
 }
+
+func TestClient_Close_Interface(t *testing.T) {
+	// Test that all provider clients can be closed through the interface
+	tests := []struct {
+		name     string
+		provider string
+		config   config.LLMConfig
+	}{
+		{
+			name:     "gemini client close",
+			provider: "gemini",
+			config: config.LLMConfig{
+				APIKey: "test-api-key",
+				Model:  "gemini-pro",
+			},
+		},
+		{
+			name:     "ollama client close",
+			provider: "ollama",
+			config: config.LLMConfig{
+				BaseURL: "http://localhost:11434",
+				Model:   "llama3",
+			},
+		},
+		{
+			name:     "groq client close",
+			provider: "groq",
+			config: config.LLMConfig{
+				APIKey: "test-groq-key",
+				Model:  "llama3-8b-8192",
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			cfg := config.Config{
+				DefaultProvider:       tt.provider,
+				RequestTimeoutSeconds: 30,
+				LLMs: map[string]config.LLMConfig{
+					tt.provider: tt.config,
+				},
+			}
+
+			client, err := GetClient(cfg, false)
+			if err != nil {
+				t.Fatalf("Expected no error creating client, got: %v", err)
+			}
+
+			if client == nil {
+				t.Fatal("Expected client to be non-nil")
+			}
+
+			// Test that Close() method is available through the interface
+			err = client.Close()
+			if err != nil {
+				t.Errorf("Expected Close() to succeed for %s provider, got error: %v", tt.provider, err)
+			}
+		})
+	}
+}
+
+func TestClient_CloseIsIdempotent(t *testing.T) {
+	// Test that calling Close() multiple times is safe
+	cfg := config.Config{
+		DefaultProvider:       "ollama",
+		RequestTimeoutSeconds: 30,
+		LLMs: map[string]config.LLMConfig{
+			"ollama": {
+				BaseURL: "http://localhost:11434",
+				Model:   "llama3",
+			},
+		},
+	}
+
+	client, err := GetClient(cfg, false)
+	if err != nil {
+		t.Fatalf("Expected no error creating client, got: %v", err)
+	}
+
+	// First close
+	err = client.Close()
+	if err != nil {
+		t.Errorf("Expected first Close() to succeed, got error: %v", err)
+	}
+
+	// Second close should also be safe
+	err = client.Close()
+	if err != nil {
+		t.Errorf("Expected second Close() to succeed (idempotent), got error: %v", err)
+	}
+}
