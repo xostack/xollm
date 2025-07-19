@@ -69,7 +69,7 @@ func TestCompareProviders(t *testing.T) {
 			"ollama": {BaseURL: "http://localhost:11434", Model: "gemma:2b"},
 		}),
 		"gemini": config.NewConfig("gemini", 30, map[string]config.LLMConfig{
-			"gemini": {APIKey: "test-key", Model: "gemini-pro"},
+			"gemini": {APIKey: "test-key", Model: "gemma-3-27b-it"},
 		}),
 		"groq": config.NewConfig("groq", 30, map[string]config.LLMConfig{
 			"groq": {APIKey: "test-key", Model: "gemma2-9b-it"},

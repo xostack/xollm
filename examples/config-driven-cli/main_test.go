@@ -117,7 +117,7 @@ func TestSaveConfigToFile(t *testing.T) {
 	cfg := config.NewConfig("gemini", 30, map[string]config.LLMConfig{
 		"gemini": {
 			APIKey: "test-key",
-			Model:  "gemini-pro",
+			Model:  "gemma-3-27b-it",
 		},
 		"ollama": {
 			BaseURL: "http://localhost:11434",
@@ -217,7 +217,7 @@ func TestValidateConfigForCLI(t *testing.T) {
 				DefaultProvider:       "gemini",
 				RequestTimeoutSeconds: 30,
 				LLMs: map[string]config.LLMConfig{
-					"gemini": {Model: "gemini-pro"}, // Missing API key
+					"gemini": {Model: "gemma-3-27b-it"}, // Missing API key
 				},
 			},
 			expectError: true,
@@ -339,7 +339,7 @@ func TestMergeConfigs(t *testing.T) {
 		DefaultProvider:       "gemini",
 		RequestTimeoutSeconds: 60,
 		LLMs: map[string]config.LLMConfig{
-			"gemini": {APIKey: "test-key", Model: "gemini-pro"},
+			"gemini": {APIKey: "test-key", Model: "gemma-3-27b-it"},
 		},
 	}
 

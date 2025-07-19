@@ -107,7 +107,7 @@ func TestNewConfigFromMap(t *testing.T) {
 	providerConfigs := map[string]LLMConfig{
 		"gemini": {
 			APIKey: "test-gemini-key",
-			Model:  "gemini-pro",
+			Model:  "gemma-3-27b-it",
 		},
 		"ollama": {
 			BaseURL: "http://localhost:11434",
@@ -207,7 +207,7 @@ model = "gemma:2b"
 
 [llms.gemini]
 api_key = "test-key"
-model = "gemini-pro"
+model = "gemma-3-27b-it"
 `
 
 	err := os.WriteFile(configPath, []byte(configContent), 0600)

@@ -13,7 +13,7 @@ func TestGetClient_Gemini(t *testing.T) {
 		LLMs: map[string]config.LLMConfig{
 			"gemini": {
 				APIKey: "test-api-key",
-				Model:  "gemini-pro",
+				Model:  "gemma-3-27b-it",
 			},
 		},
 	}
@@ -143,7 +143,7 @@ func TestGetClient_MissingAPIKey(t *testing.T) {
 		LLMs: map[string]config.LLMConfig{
 			"gemini": {
 				APIKey: "", // Empty API key
-				Model:  "gemini-pro",
+				Model:  "gemma-3-27b-it",
 			},
 		},
 	}
@@ -314,7 +314,7 @@ func TestClient_Close_Interface(t *testing.T) {
 			provider: "gemini",
 			config: config.LLMConfig{
 				APIKey: "test-api-key",
-				Model:  "gemini-pro",
+				Model:  "gemma-3-27b-it",
 			},
 		},
 		{

@@ -24,7 +24,7 @@
 // Example programmatic usage:
 //
 //	cfg := config.NewConfig("gemini", 30, map[string]config.LLMConfig{
-//		"gemini": {APIKey: "key", Model: "gemini-pro"},
+//		"gemini": {APIKey: "key", Model: "gemma-3-27b-it"},
 //	})
 package config
 
@@ -398,7 +398,7 @@ func (c *Config) GetLLMConfig(provider string) (LLMConfig, bool) {
 // Example:
 //
 //	cfg := NewConfig("gemini", 30, map[string]LLMConfig{
-//		"gemini": {APIKey: "your-key", Model: "gemini-pro"},
+//		"gemini": {APIKey: "your-key", Model: "gemma-3-27b-it"},
 //		"ollama": {BaseURL: "http://localhost:11434"},
 //	})
 func NewConfig(defaultProvider string, timeoutSeconds int, providers map[string]LLMConfig) Config {
