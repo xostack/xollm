@@ -72,7 +72,7 @@ model = "gemini-1.5-flash-latest"
 # Groq configuration
 [llms.groq]
 api_key = "your-groq-api-key"
-model = "gemma:2b-8b-8192"
+model = "gemma2-9b-it"
 ```
 
 ## Configuration File Locations

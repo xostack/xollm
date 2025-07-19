@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	defaultGroqModel = "gemma:2b-8b-8192" // A common default, user can override
+	defaultGroqModel = "gemma2-9b-it" // A common default, user can override
 	providerName     = "groq"
 	groqAPIEndpoint  = "https://api.groq.com/openai/v1/chat/completions"
 	maxRetries       = 1 // Simple retry for transient network issues, can be configured

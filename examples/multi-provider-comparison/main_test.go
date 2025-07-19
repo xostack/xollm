@@ -72,7 +72,7 @@ func TestCompareProviders(t *testing.T) {
 			"gemini": {APIKey: "test-key", Model: "gemini-pro"},
 		}),
 		"groq": config.NewConfig("groq", 30, map[string]config.LLMConfig{
-			"groq": {APIKey: "test-key", Model: "gemma:2b-8b-8192"},
+			"groq": {APIKey: "test-key", Model: "gemma2-9b-it"},
 		}),
 	}
 

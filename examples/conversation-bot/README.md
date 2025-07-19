@@ -154,7 +154,7 @@ export GEMINI_MODEL="gemini-1.5-flash-latest"
 
 # Groq
 export GROQ_API_KEY="your-groq-api-key"
-export GROQ_MODEL="gemma:2b-8b-8192"
+export GROQ_MODEL="gemma2-9b-it"
 ```
 
 ## Command Line Options

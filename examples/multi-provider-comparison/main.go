@@ -185,7 +185,7 @@ func createProviderConfigs() map[string]config.Config {
 	configs["groq"] = config.NewConfig("groq", 60, map[string]config.LLMConfig{
 		"groq": {
 			APIKey: getEnvOrDefault("GROQ_API_KEY", "your-groq-api-key"),
-			Model:  getEnvOrDefault("GROQ_MODEL", "gemma:2b-8b-8192"),
+			Model:  getEnvOrDefault("GROQ_MODEL", "gemma2-9b-it"),
 		},
 	})
 

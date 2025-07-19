@@ -65,7 +65,7 @@ func TestGetClient_Groq(t *testing.T) {
 		LLMs: map[string]config.LLMConfig{
 			"groq": {
 				APIKey: "test-groq-key",
-				Model:  "gemma:2b-8b-8192",
+				Model:  "gemma2-9b-it",
 			},
 		},
 	}
@@ -330,7 +330,7 @@ func TestClient_Close_Interface(t *testing.T) {
 			provider: "groq",
 			config: config.LLMConfig{
 				APIKey: "test-groq-key",
-				Model:  "gemma:2b-8b-8192",
+				Model:  "gemma2-9b-it",
 			},
 		},
 	}

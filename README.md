@@ -15,7 +15,7 @@ xollm abstracts away the differences between various LLM providers, offering a s
 - **Auth**: API Key
 
 ### Groq
-- **Model**: `gemma:2b-8b-8192` (default)  
+- **Model**: `gemma2-9b-it` (default)  
 - **Auth**: API Key
 
 ### Ollama (Self-hosted)
@@ -95,7 +95,7 @@ model = "gemini-1.5-flash-latest"
 
 [llms.groq]
 api_key = "your-groq-api-key"
-model = "gemma:2b-8b-8192"
+model = "gemma2-9b-it"
 ```
 
 ## Dependencies

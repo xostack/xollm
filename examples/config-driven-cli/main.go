@@ -149,7 +149,7 @@ func createDefaultConfig() config.Config {
 		},
 		"groq": {
 			APIKey: "your-groq-api-key",
-			Model:  "gemma:2b-8b-8192",
+			Model:  "gemma2-9b-it",
 		},
 	})
 }
@@ -183,7 +183,7 @@ model = "gemini-1.5-flash-latest"
 # Groq configuration (cloud-based)
 [llms.groq]
 api_key = "your-groq-api-key"
-model = "gemma:2b-8b-8192"
+model = "gemma2-9b-it"
 
 # Additional providers can be added here following the same pattern
 # [llms.provider_name]
@@ -305,11 +305,11 @@ func initializeConfigInteractive(configPath string) error {
 		scanner.Scan()
 		apiKey := strings.TrimSpace(scanner.Text())
 
-		fmt.Print("Groq model [gemma:2b-8b-8192]: ")
+		fmt.Print("Groq model [gemma2-9b-it]: ")
 		scanner.Scan()
 		model := strings.TrimSpace(scanner.Text())
 		if model == "" {
-			model = "gemma:2b-8b-8192"
+			model = "gemma2-9b-it"
 		}
 
 		cfg.LLMs["groq"] = config.LLMConfig{

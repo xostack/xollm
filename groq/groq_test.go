@@ -83,7 +83,7 @@ func TestGroqClient_Generate_MockServer_Success(t *testing.T) {
 			"id": "chatcmpl-test",
 			"object": "chat.completion",
 			"created": 1234567890,
-			"model": "gemma:2b-8b-8192",
+			"model": "gemma2-9b-it",
 			"choices": [
 				{
 					"index": 0,
@@ -107,7 +107,7 @@ func TestGroqClient_Generate_MockServer_Success(t *testing.T) {
 	client := &Client{
 		httpClient: &http.Client{Timeout: 10 * time.Second},
 		apiKey:     "test-api-key",
-		modelName:  "gemma:2b-8b-8192",
+		modelName:  "gemma2-9b-it",
 	}
 
 	// Override the API endpoint for testing
