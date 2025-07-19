@@ -150,7 +150,7 @@ export OLLAMA_MODEL="gemma:2b"
 
 # Gemini
 export GEMINI_API_KEY="your-gemini-api-key" 
-export GEMINI_MODEL="gemini-1.5-flash-latest"
+export GEMINI_MODEL="gemma-3-27b-it"
 
 # Groq
 export GROQ_API_KEY="your-groq-api-key"

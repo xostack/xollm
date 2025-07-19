@@ -396,7 +396,7 @@ func demonstrateBatchProcessing() error {
 		cfg = config.NewConfig("gemini", *timeout, map[string]config.LLMConfig{
 			"gemini": {
 				APIKey: apiKey,
-				Model:  getEnvOrDefault("GEMINI_MODEL", "gemini-1.5-flash-latest"),
+				Model:  getEnvOrDefault("GEMINI_MODEL", "gemma-3-27b-it"),
 			},
 		})
 	case "groq":

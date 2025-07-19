@@ -67,7 +67,7 @@ model = "gemma:2b"
 # Google Gemini configuration  
 [llms.gemini]
 api_key = "your-gemini-api-key"
-model = "gemini-1.5-flash-latest"
+model = "gemma-3-27b-it"
 
 # Groq configuration
 [llms.groq]
@@ -190,7 +190,7 @@ export OLLAMA_MODEL="gemma:2b"
    
    [llms.gemini]
    api_key = "${GEMINI_API_KEY}"
-   model = "gemini-1.5-flash-latest"
+   model = "gemma-3-27b-it"
    ```
 
 2. Deploy with environment variables:
@@ -218,7 +218,7 @@ request_timeout_seconds = 30
 
 [llms.gemini]
 api_key = "${GEMINI_API_KEY}"
-model = "gemini-1.5-flash-latest"
+model = "gemma-3-27b-it"
 ```
 
 Usage:

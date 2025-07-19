@@ -11,7 +11,7 @@ xollm abstracts away the differences between various LLM providers, offering a s
 ## Supported Providers
 
 ### Gemini (Google)
-- **Model**: `gemini-1.5-flash-latest` (default)
+- **Model**: `gemma-3-27b-it` (default)
 - **Auth**: API Key
 
 ### Groq
@@ -91,7 +91,7 @@ model = "gemma:2b"
 
 [llms.gemini]
 api_key = "your-gemini-api-key"
-model = "gemini-1.5-flash-latest"
+model = "gemma-3-27b-it"
 
 [llms.groq]
 api_key = "your-groq-api-key"

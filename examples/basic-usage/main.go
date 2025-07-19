@@ -102,7 +102,7 @@ func createSampleConfigs() map[string]config.Config {
 	configs["gemini"] = config.NewConfig("gemini", 60, map[string]config.LLMConfig{
 		"gemini": {
 			APIKey: getEnvOrDefault("GEMINI_API_KEY", "your-gemini-api-key"),
-			Model:  "gemini-1.5-flash-latest",
+			Model:  "gemma-3-27b-it",
 		},
 	})
 

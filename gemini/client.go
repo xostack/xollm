@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	defaultGeminiModel = "gemini-1.5-flash-latest" // Default to Flash model
+	defaultGeminiModel = "gemma-3-27b-it" // Default to Flash model
 	providerName       = "gemini"
 )
 
@@ -23,7 +23,7 @@ type Client struct {
 
 // NewClient creates a new Gemini client.
 // It requires a context for initialization (can be context.Background()),
-// the API key, an optional model name (defaults to gemini-1.5-flash-latest),
+// the API key, an optional model name (defaults to gemma-3-27b-it),
 // and a debugMode flag.
 func NewClient(ctx context.Context, apiKey string, modelOverride string, debugMode bool) (*Client, error) {
 	if apiKey == "" {

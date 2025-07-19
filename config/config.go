@@ -19,7 +19,7 @@
 //
 //	[llms.gemini]
 //	api_key = "your-gemini-api-key"
-//	model = "gemini-1.5-flash-latest"
+//	model = "gemma-3-27b-it"
 //
 // Example programmatic usage:
 //

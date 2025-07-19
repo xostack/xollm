@@ -145,7 +145,7 @@ func createDefaultConfig() config.Config {
 		},
 		"gemini": {
 			APIKey: "your-gemini-api-key",
-			Model:  "gemini-1.5-flash-latest",
+			Model:  "gemma-3-27b-it",
 		},
 		"groq": {
 			APIKey: "your-groq-api-key",
@@ -178,7 +178,7 @@ model = "gemma:2b"
 # Google Gemini configuration (cloud-based)
 [llms.gemini]
 api_key = "your-gemini-api-key"
-model = "gemini-1.5-flash-latest"
+model = "gemma-3-27b-it"
 
 # Groq configuration (cloud-based)
 [llms.groq]
@@ -288,11 +288,11 @@ func initializeConfigInteractive(configPath string) error {
 		scanner.Scan()
 		apiKey := strings.TrimSpace(scanner.Text())
 
-		fmt.Print("Gemini model [gemini-1.5-flash-latest]: ")
+		fmt.Print("Gemini model [gemma-3-27b-it]: ")
 		scanner.Scan()
 		model := strings.TrimSpace(scanner.Text())
 		if model == "" {
-			model = "gemini-1.5-flash-latest"
+			model = "gemma-3-27b-it"
 		}
 
 		cfg.LLMs["gemini"] = config.LLMConfig{
