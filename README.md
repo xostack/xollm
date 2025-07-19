@@ -38,7 +38,7 @@ import (
 
 func main() {
     // Direct provider instantiation
-    client, err := gemini.NewClient(context.Background(), "your-api-key", "", false)
+    client, err := gemini.NewClient(context.Background(), "your-api-key", "", 60, false)
     if err != nil {
         panic(err)
     }

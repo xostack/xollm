@@ -10,7 +10,7 @@ import (
 )
 
 func TestNewClient_Success(t *testing.T) {
-	client, err := NewClient("test-api-key", "", 30, false)
+	client, err := NewClient(context.Background(), "test-api-key", "", 30, false)
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
@@ -33,7 +33,7 @@ func TestNewClient_Success(t *testing.T) {
 }
 
 func TestNewClient_EmptyAPIKey(t *testing.T) {
-	client, err := NewClient("", "", 30, false)
+	client, err := NewClient(context.Background(), "", "", 30, false)
 	if err == nil {
 		t.Fatal("Expected error for empty API key")
 	}
@@ -50,7 +50,7 @@ func TestNewClient_EmptyAPIKey(t *testing.T) {
 
 func TestNewClient_WithCustomModel(t *testing.T) {
 	customModel := "mixtral-8x7b-32768"
-	client, err := NewClient("test-api-key", customModel, 45, true)
+	client, err := NewClient(context.Background(), "test-api-key", customModel, 45, true)
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}

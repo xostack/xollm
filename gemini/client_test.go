@@ -11,7 +11,7 @@ func TestNewClient_Success(t *testing.T) {
 	// we test with a dummy API key and expect success in client creation
 	// The actual API call would fail, but client creation should succeed
 
-	client, err := NewClient(context.Background(), "test-api-key", "", false)
+	client, err := NewClient(context.Background(), "test-api-key", "", 30, false)
 	if err != nil {
 		// If we get an auth error, that's expected since it's a dummy key
 		// but we shouldn't get other types of errors during client creation
@@ -31,7 +31,7 @@ func TestNewClient_Success(t *testing.T) {
 }
 
 func TestNewClient_EmptyAPIKey(t *testing.T) {
-	client, err := NewClient(context.Background(), "", "", false)
+	client, err := NewClient(context.Background(), "", "", 30, false)
 	if err == nil {
 		t.Fatal("Expected error for empty API key")
 	}
@@ -48,7 +48,7 @@ func TestNewClient_EmptyAPIKey(t *testing.T) {
 
 func TestNewClient_WithCustomModel(t *testing.T) {
 	// Test client creation with custom model override
-	client, err := NewClient(context.Background(), "test-api-key", "gemini-1.5-pro", true)
+	client, err := NewClient(context.Background(), "test-api-key", "gemini-1.5-pro", 60, true)
 	if err != nil {
 		// If we get an auth error, that's expected since it's a dummy key
 		if !strings.Contains(err.Error(), "failed to create genai client") {
@@ -73,7 +73,7 @@ func TestNewClient_WithCustomModel(t *testing.T) {
 
 func TestNewClient_DefaultModel(t *testing.T) {
 	// Test that default model is used when no override is provided
-	client, err := NewClient(context.Background(), "test-api-key", "", false)
+	client, err := NewClient(context.Background(), "test-api-key", "", 30, false)
 	if err != nil {
 		if !strings.Contains(err.Error(), "failed to create genai client") {
 			t.Fatalf("Unexpected error during client creation: %v", err)
@@ -167,8 +167,8 @@ func TestGeminiConstants(t *testing.T) {
 	}
 
 	// Test that default model is a reasonable value
-	if !strings.Contains(defaultGeminiModel, "gemini") {
-		t.Errorf("Default model '%s' should contain 'gemini'", defaultGeminiModel)
+	if !strings.Contains(defaultGeminiModel, "gemma") {
+		t.Errorf("Default model '%s' should contain 'gemma'", defaultGeminiModel)
 	}
 }
 

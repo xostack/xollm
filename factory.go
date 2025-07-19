@@ -74,17 +74,17 @@ var GetClient func(cfg config.Config, debugMode bool) (Client, error) = func(cfg
 		if llmCfg.APIKey == "" {
 			return nil, fmt.Errorf("API key for Gemini not found in configuration")
 		}
-		return gemini.NewClient(context.Background(), llmCfg.APIKey, llmCfg.Model, debugMode)
+		return gemini.NewClient(context.Background(), llmCfg.APIKey, llmCfg.Model, requestTimeout, debugMode)
 	case "ollama":
 		if llmCfg.BaseURL == "" {
 			return nil, fmt.Errorf("base URL for Ollama not found in configuration")
 		}
-		return ollama.NewClient(llmCfg.BaseURL, llmCfg.Model, requestTimeout, debugMode)
+		return ollama.NewClient(context.Background(), llmCfg.BaseURL, llmCfg.Model, requestTimeout, debugMode)
 	case "groq":
 		if llmCfg.APIKey == "" {
 			return nil, fmt.Errorf("API key for Groq not found in configuration")
 		}
-		return groq.NewClient(llmCfg.APIKey, llmCfg.Model, requestTimeout, debugMode)
+		return groq.NewClient(context.Background(), llmCfg.APIKey, llmCfg.Model, requestTimeout, debugMode)
 	default:
 		return nil, fmt.Errorf("unsupported LLM provider: %s", providerName)
 	}

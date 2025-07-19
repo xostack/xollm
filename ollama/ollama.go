@@ -56,10 +56,11 @@ type ollamaGenerateResponse struct {
 }
 
 // NewClient creates a new Ollama client.
+// ctx is used for timeout configuration and cancellation.
 // baseURL is the address of the Ollama server (e.g., "http://localhost:11434").
 // modelOverride is an optional model name to use instead of the default.
 // debugMode controls verbose logging.
-func NewClient(baseURL string, modelOverride string, requestTimeoutSeconds int, debugMode bool) (*Client, error) {
+func NewClient(ctx context.Context, baseURL string, modelOverride string, requestTimeoutSeconds int, debugMode bool) (*Client, error) {
 	if baseURL == "" {
 		return nil, fmt.Errorf("Ollama base URL is required")
 	}
@@ -86,9 +87,26 @@ func NewClient(baseURL string, modelOverride string, requestTimeoutSeconds int, 
 		}
 	}
 
+	// Use context timeout if requestTimeoutSeconds is 0
+	timeout := time.Duration(requestTimeoutSeconds) * time.Second
+	if requestTimeoutSeconds <= 0 {
+		// Check if context has a deadline
+		if deadline, ok := ctx.Deadline(); ok {
+			timeout = time.Until(deadline)
+			if debugMode {
+				log.Printf("Using context deadline for timeout: %v", timeout)
+			}
+		} else {
+			timeout = 60 * time.Second // Default fallback
+			if debugMode {
+				log.Printf("Using default timeout: %v", timeout)
+			}
+		}
+	}
+
 	return &Client{
 		httpClient: &http.Client{
-			Timeout: time.Duration(requestTimeoutSeconds) * time.Second,
+			Timeout: timeout,
 		},
 		baseURL:   cleanedBaseURL,
 		modelName: modelToUse,

@@ -84,8 +84,9 @@ type groqChatCompletionResponse struct {
 }
 
 // NewClient creates a new Groq client.
+// ctx is used for timeout configuration and cancellation.
 // debugMode controls verbose logging.
-func NewClient(apiKey string, modelOverride string, requestTimeoutSeconds int, debugMode bool) (*Client, error) {
+func NewClient(ctx context.Context, apiKey string, modelOverride string, requestTimeoutSeconds int, debugMode bool) (*Client, error) {
 	if apiKey == "" {
 		return nil, fmt.Errorf("groq API key is required")
 	}
@@ -102,9 +103,26 @@ func NewClient(apiKey string, modelOverride string, requestTimeoutSeconds int, d
 		}
 	}
 
+	// Use context timeout if requestTimeoutSeconds is 0
+	timeout := time.Duration(requestTimeoutSeconds) * time.Second
+	if requestTimeoutSeconds <= 0 {
+		// Check if context has a deadline
+		if deadline, ok := ctx.Deadline(); ok {
+			timeout = time.Until(deadline)
+			if debugMode {
+				log.Printf("Using context deadline for timeout: %v", timeout)
+			}
+		} else {
+			timeout = 60 * time.Second // Default fallback
+			if debugMode {
+				log.Printf("Using default timeout: %v", timeout)
+			}
+		}
+	}
+
 	return &Client{
 		httpClient: &http.Client{
-			Timeout: time.Duration(requestTimeoutSeconds) * time.Second,
+			Timeout: timeout,
 		},
 		apiKey:    apiKey,
 		modelName: modelToUse,

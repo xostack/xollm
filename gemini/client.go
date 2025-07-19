@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"log" // For logging initialization errors if needed
+	"time"
 
 	"github.com/google/generative-ai-go/genai"
 	"google.golang.org/api/option"
@@ -24,10 +25,21 @@ type Client struct {
 // NewClient creates a new Gemini client.
 // It requires a context for initialization (can be context.Background()),
 // the API key, an optional model name (defaults to gemma-3-27b-it),
+// a requestTimeoutSeconds parameter for consistency with other providers,
 // and a debugMode flag.
-func NewClient(ctx context.Context, apiKey string, modelOverride string, debugMode bool) (*Client, error) {
+func NewClient(ctx context.Context, apiKey string, modelOverride string, requestTimeoutSeconds int, debugMode bool) (*Client, error) {
 	if apiKey == "" {
 		return nil, fmt.Errorf("Gemini API key is required")
+	}
+
+	// Apply timeout to context if specified
+	if requestTimeoutSeconds > 0 {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, time.Duration(requestTimeoutSeconds)*time.Second)
+		defer cancel()
+		if debugMode {
+			log.Printf("Using timeout for Gemini client: %d seconds", requestTimeoutSeconds)
+		}
 	}
 
 	genaiClient, err := genai.NewClient(ctx, option.WithAPIKey(apiKey))
@@ -35,7 +47,7 @@ func NewClient(ctx context.Context, apiKey string, modelOverride string, debugMo
 		// This log is more of a system/developer error, so keep it for now, or make it debug conditional too.
 		// For now, let's assume it's important enough to always show if client creation fails.
 		log.Printf("Error initializing Google GenAI client: %v. Make sure your API key is valid and has permissions.", err)
-		return nil, fmt.Errorf("failed to create genai client: %w. [2, 5]", err)
+		return nil, fmt.Errorf("failed to create genai client: %w", err)
 	}
 
 	modelToUse := defaultGeminiModel
@@ -70,7 +82,7 @@ func (c *Client) Generate(ctx context.Context, prompt string) (string, error) {
 	// Simple text generation
 	resp, err := model.GenerateContent(ctx, genai.Text(prompt))
 	if err != nil {
-		return "", fmt.Errorf("failed to generate content from Gemini: %w. [2, 7]", err)
+		return "", fmt.Errorf("failed to generate content from Gemini: %w", err)
 	}
 
 	// Extract text from the response.
@@ -80,12 +92,12 @@ func (c *Client) Generate(ctx context.Context, prompt string) (string, error) {
 		// Check for blocked prompt/response
 		if len(resp.Candidates) > 0 && resp.Candidates[0].FinishReason == genai.FinishReasonSafety {
 			// You could inspect resp.Candidates[0].SafetyRatings for more details
-			return "", fmt.Errorf("Gemini content generation blocked due to safety settings. [7]")
+			return "", fmt.Errorf("Gemini content generation blocked due to safety settings")
 		}
 		if resp.PromptFeedback != nil && resp.PromptFeedback.BlockReason != genai.BlockReasonUnspecified {
-			return "", fmt.Errorf("Gemini prompt blocked: %s. [2]", resp.PromptFeedback.BlockReason.String())
+			return "", fmt.Errorf("Gemini prompt blocked: %s", resp.PromptFeedback.BlockReason.String())
 		}
-		return "", fmt.Errorf("Gemini response was empty or malformed. [2, 6]")
+		return "", fmt.Errorf("Gemini response was empty or malformed")
 	}
 
 	var resultText string
@@ -118,7 +130,7 @@ func (c *Client) ProviderName() string {
 // It's good practice to offer a Close method if the underlying client has one.
 func (c *Client) Close() error {
 	if c.genaiClient != nil {
-		return c.genaiClient.Close() // [2, 4]
+		return c.genaiClient.Close()
 	}
 	return nil
 }

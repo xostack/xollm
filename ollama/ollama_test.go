@@ -10,7 +10,7 @@ import (
 )
 
 func TestNewClient_Success(t *testing.T) {
-	client, err := NewClient("http://localhost:11434", "", 30, false)
+	client, err := NewClient(context.Background(), "http://localhost:11434", "", 30, false)
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
@@ -33,7 +33,7 @@ func TestNewClient_Success(t *testing.T) {
 }
 
 func TestNewClient_EmptyBaseURL(t *testing.T) {
-	client, err := NewClient("", "", 30, false)
+	client, err := NewClient(context.Background(), "", "", 30, false)
 	if err == nil {
 		t.Fatal("Expected error for empty base URL")
 	}
@@ -69,7 +69,7 @@ func TestNewClient_InvalidBaseURL(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			client, err := NewClient(tt.baseURL, "", 30, false)
+			client, err := NewClient(context.Background(), tt.baseURL, "", 30, false)
 			if err == nil {
 				t.Fatal("Expected error for invalid base URL")
 			}
@@ -83,7 +83,7 @@ func TestNewClient_InvalidBaseURL(t *testing.T) {
 
 func TestNewClient_WithCustomModel(t *testing.T) {
 	customModel := "codellama"
-	client, err := NewClient("http://localhost:11434", customModel, 45, true)
+	client, err := NewClient(context.Background(), "http://localhost:11434", customModel, 45, true)
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
@@ -95,7 +95,7 @@ func TestNewClient_WithCustomModel(t *testing.T) {
 
 func TestNewClient_URLCleaning(t *testing.T) {
 	// Test that trailing slash is removed
-	client, err := NewClient("http://localhost:11434/", "", 30, false)
+	client, err := NewClient(context.Background(), "http://localhost:11434/", "", 30, false)
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
@@ -138,7 +138,7 @@ func TestOllamaClient_Generate_MockServer_Success(t *testing.T) {
 	defer mockServer.Close()
 
 	// Create client with mock server URL
-	client, err := NewClient(mockServer.URL, "", 10, false)
+	client, err := NewClient(context.Background(), mockServer.URL, "", 10, false)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
 	}
@@ -165,7 +165,7 @@ func TestOllamaClient_Generate_MockServer_Error(t *testing.T) {
 	}))
 	defer mockServer.Close()
 
-	client, err := NewClient(mockServer.URL, "", 10, false)
+	client, err := NewClient(context.Background(), mockServer.URL, "", 10, false)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
 	}
@@ -195,7 +195,7 @@ func TestOllamaClient_Generate_MockServer_WithErrorField(t *testing.T) {
 	}))
 	defer mockServer.Close()
 
-	client, err := NewClient(mockServer.URL, "", 10, false)
+	client, err := NewClient(context.Background(), mockServer.URL, "", 10, false)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
 	}
