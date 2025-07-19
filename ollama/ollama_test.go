@@ -129,7 +129,7 @@ func TestOllamaClient_Generate_MockServer_Success(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{
-			"model": "llama3",
+			"model": "gemma:2b",
 			"created_at": "2024-01-01T12:00:00Z",
 			"response": "Hello! This is a test response from Ollama.",
 			"done": true
@@ -186,7 +186,7 @@ func TestOllamaClient_Generate_MockServer_WithErrorField(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{
-			"model": "llama3",
+			"model": "gemma:2b",
 			"created_at": "2024-01-01T12:00:00Z",
 			"response": "",
 			"done": true,

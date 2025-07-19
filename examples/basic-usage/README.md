@@ -31,7 +31,7 @@ You'll need at least one LLM provider configured. The example includes sample co
    ollama serve &
    
    # Pull a model (if not already done)
-   ollama pull llama3
+   ollama pull gemma:2b
    ```
 
 2. Run the example:
@@ -79,7 +79,7 @@ The example demonstrates two approaches:
 ```go
 // Create configuration programmatically
 cfg := config.NewConfig("ollama", 60, map[string]config.LLMConfig{
-    "ollama": {BaseURL: "http://localhost:11434", Model: "llama3"},
+    "ollama": {BaseURL: "http://localhost:11434", Model: "gemma:2b"},
 })
 
 // Get client from factory
@@ -93,7 +93,7 @@ defer client.Close() // Important: cleanup resources
 ### 2. Direct Provider Instantiation
 ```go
 // Create client directly (useful for simple cases)
-client, err := ollama.NewClient("http://localhost:11434", "llama3", 60, false)
+client, err := ollama.NewClient("http://localhost:11434", "gemma:2b", 60, false)
 if err != nil {
     log.Fatalf("Failed to create Ollama client: %v", err)
 }

@@ -146,7 +146,7 @@ Configure providers with environment variables:
 ```bash
 # Ollama (default)
 export OLLAMA_BASE_URL="http://localhost:11434"
-export OLLAMA_MODEL="llama3"
+export OLLAMA_MODEL="gemma:2b"
 
 # Gemini
 export GEMINI_API_KEY="your-gemini-api-key" 
@@ -154,7 +154,7 @@ export GEMINI_MODEL="gemini-1.5-flash-latest"
 
 # Groq
 export GROQ_API_KEY="your-groq-api-key"
-export GROQ_MODEL="llama3-8b-8192"
+export GROQ_MODEL="gemma:2b-8b-8192"
 ```
 
 ## Command Line Options
@@ -184,7 +184,7 @@ import (
 func main() {
     // Create configuration
     cfg := config.NewConfig("ollama", 60, map[string]config.LLMConfig{
-        "ollama": {BaseURL: "http://localhost:11434", Model: "llama3"},
+        "ollama": {BaseURL: "http://localhost:11434", Model: "gemma:2b"},
     })
     
     // Create conversation

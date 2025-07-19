@@ -39,7 +39,7 @@ func TestGetClient_Ollama(t *testing.T) {
 		LLMs: map[string]config.LLMConfig{
 			"ollama": {
 				BaseURL: "http://localhost:11434",
-				Model:   "llama3",
+				Model:   "gemma:2b",
 			},
 		},
 	}
@@ -65,7 +65,7 @@ func TestGetClient_Groq(t *testing.T) {
 		LLMs: map[string]config.LLMConfig{
 			"groq": {
 				APIKey: "test-groq-key",
-				Model:  "llama3-8b-8192",
+				Model:  "gemma:2b-8b-8192",
 			},
 		},
 	}
@@ -170,7 +170,7 @@ func TestGetClient_MissingBaseURL(t *testing.T) {
 		LLMs: map[string]config.LLMConfig{
 			"ollama": {
 				BaseURL: "", // Empty base URL
-				Model:   "llama3",
+				Model:   "gemma:2b",
 			},
 		},
 	}
@@ -223,7 +223,7 @@ func TestGetClient_DefaultTimeout(t *testing.T) {
 		LLMs: map[string]config.LLMConfig{
 			"ollama": {
 				BaseURL: "http://localhost:11434",
-				Model:   "llama3",
+				Model:   "gemma:2b",
 			},
 		},
 	}
@@ -322,7 +322,7 @@ func TestClient_Close_Interface(t *testing.T) {
 			provider: "ollama",
 			config: config.LLMConfig{
 				BaseURL: "http://localhost:11434",
-				Model:   "llama3",
+				Model:   "gemma:2b",
 			},
 		},
 		{
@@ -330,7 +330,7 @@ func TestClient_Close_Interface(t *testing.T) {
 			provider: "groq",
 			config: config.LLMConfig{
 				APIKey: "test-groq-key",
-				Model:  "llama3-8b-8192",
+				Model:  "gemma:2b-8b-8192",
 			},
 		},
 	}
@@ -371,7 +371,7 @@ func TestClient_CloseIsIdempotent(t *testing.T) {
 		LLMs: map[string]config.LLMConfig{
 			"ollama": {
 				BaseURL: "http://localhost:11434",
-				Model:   "llama3",
+				Model:   "gemma:2b",
 			},
 		},
 	}

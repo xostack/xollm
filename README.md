@@ -15,11 +15,11 @@ xollm abstracts away the differences between various LLM providers, offering a s
 - **Auth**: API Key
 
 ### Groq
-- **Model**: `llama3-8b-8192` (default)  
+- **Model**: `gemma:2b-8b-8192` (default)  
 - **Auth**: API Key
 
 ### Ollama (Self-hosted)
-- **Model**: `llama3` (default)
+- **Model**: `gemma:2b` (default)
 - **URL**: `http://localhost:11434` (default)
 
 ## Quick Start
@@ -87,7 +87,7 @@ request_timeout_seconds = 60
 
 [llms.ollama]
 base_url = "http://localhost:11434"
-model = "llama3"
+model = "gemma:2b"
 
 [llms.gemini]
 api_key = "your-gemini-api-key"
@@ -95,7 +95,7 @@ model = "gemini-1.5-flash-latest"
 
 [llms.groq]
 api_key = "your-groq-api-key"
-model = "llama3-8b-8192"
+model = "gemma:2b-8b-8192"
 ```
 
 ## Dependencies

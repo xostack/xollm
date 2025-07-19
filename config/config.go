@@ -15,7 +15,7 @@
 //
 //	[llms.ollama]
 //	base_url = "http://localhost:11434"
-//	model = "llama3"
+//	model = "gemma:2b"
 //
 //	[llms.gemini]
 //	api_key = "your-gemini-api-key"
@@ -89,7 +89,7 @@ type LLMConfig struct {
 
 	// Model is an optional model name override for the provider.
 	// If empty, the provider's default model will be used.
-	// Example: "gemini-1.5-pro", "llama3", "mixtral-8x7b-32768"
+	// Example: "gemini-1.5-pro", "gemma:2b", "mixtral-8x7b-32768"
 	Model string `toml:"model,omitempty"`
 }
 

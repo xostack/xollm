@@ -111,7 +111,7 @@ func TestNewConfigFromMap(t *testing.T) {
 		},
 		"ollama": {
 			BaseURL: "http://localhost:11434",
-			Model:   "llama3",
+			Model:   "gemma:2b",
 		},
 	}
 
@@ -203,7 +203,7 @@ request_timeout_seconds = 45
 
 [llms.ollama]
 base_url = "http://localhost:11434"
-model = "llama3"
+model = "gemma:2b"
 
 [llms.gemini]
 api_key = "test-key"

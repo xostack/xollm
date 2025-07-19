@@ -66,13 +66,13 @@ func TestCompareProviders(t *testing.T) {
 	providers := []string{"ollama", "gemini", "groq"}
 	configs := map[string]config.Config{
 		"ollama": config.NewConfig("ollama", 30, map[string]config.LLMConfig{
-			"ollama": {BaseURL: "http://localhost:11434", Model: "llama3"},
+			"ollama": {BaseURL: "http://localhost:11434", Model: "gemma:2b"},
 		}),
 		"gemini": config.NewConfig("gemini", 30, map[string]config.LLMConfig{
 			"gemini": {APIKey: "test-key", Model: "gemini-pro"},
 		}),
 		"groq": config.NewConfig("groq", 30, map[string]config.LLMConfig{
-			"groq": {APIKey: "test-key", Model: "llama3-8b-8192"},
+			"groq": {APIKey: "test-key", Model: "gemma:2b-8b-8192"},
 		}),
 	}
 

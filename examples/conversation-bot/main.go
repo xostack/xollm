@@ -392,7 +392,7 @@ func demonstrateConversationBot() error {
 		cfg = config.NewConfig("ollama", *timeout, map[string]config.LLMConfig{
 			"ollama": {
 				BaseURL: getEnvOrDefault("OLLAMA_BASE_URL", "http://localhost:11434"),
-				Model:   getEnvOrDefault("OLLAMA_MODEL", "llama3"),
+				Model:   getEnvOrDefault("OLLAMA_MODEL", "gemma:2b"),
 			},
 		})
 	case "gemini":
@@ -414,7 +414,7 @@ func demonstrateConversationBot() error {
 		cfg = config.NewConfig("groq", *timeout, map[string]config.LLMConfig{
 			"groq": {
 				APIKey: apiKey,
-				Model:  getEnvOrDefault("GROQ_MODEL", "llama3-8b-8192"),
+				Model:  getEnvOrDefault("GROQ_MODEL", "gemma:2b-8b-8192"),
 			},
 		})
 	default:

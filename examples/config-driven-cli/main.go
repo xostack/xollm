@@ -141,7 +141,7 @@ func createDefaultConfig() config.Config {
 	return config.NewConfig("ollama", 60, map[string]config.LLMConfig{
 		"ollama": {
 			BaseURL: "http://localhost:11434",
-			Model:   "llama3",
+			Model:   "gemma:2b",
 		},
 		"gemini": {
 			APIKey: "your-gemini-api-key",
@@ -149,7 +149,7 @@ func createDefaultConfig() config.Config {
 		},
 		"groq": {
 			APIKey: "your-groq-api-key",
-			Model:  "llama3-8b-8192",
+			Model:  "gemma:2b-8b-8192",
 		},
 	})
 }
@@ -173,7 +173,7 @@ request_timeout_seconds = 60
 # Ollama configuration (self-hosted)
 [llms.ollama]
 base_url = "http://localhost:11434"
-model = "llama3"
+model = "gemma:2b"
 
 # Google Gemini configuration (cloud-based)
 [llms.gemini]
@@ -183,7 +183,7 @@ model = "gemini-1.5-flash-latest"
 # Groq configuration (cloud-based)
 [llms.groq]
 api_key = "your-groq-api-key"
-model = "llama3-8b-8192"
+model = "gemma:2b-8b-8192"
 
 # Additional providers can be added here following the same pattern
 # [llms.provider_name]
@@ -271,11 +271,11 @@ func initializeConfigInteractive(configPath string) error {
 			baseURL = "http://localhost:11434"
 		}
 
-		fmt.Print("Ollama model [llama3]: ")
+		fmt.Print("Ollama model [gemma:2b]: ")
 		scanner.Scan()
 		model := strings.TrimSpace(scanner.Text())
 		if model == "" {
-			model = "llama3"
+			model = "gemma:2b"
 		}
 
 		cfg.LLMs["ollama"] = config.LLMConfig{
@@ -305,11 +305,11 @@ func initializeConfigInteractive(configPath string) error {
 		scanner.Scan()
 		apiKey := strings.TrimSpace(scanner.Text())
 
-		fmt.Print("Groq model [llama3-8b-8192]: ")
+		fmt.Print("Groq model [gemma:2b-8b-8192]: ")
 		scanner.Scan()
 		model := strings.TrimSpace(scanner.Text())
 		if model == "" {
-			model = "llama3-8b-8192"
+			model = "gemma:2b-8b-8192"
 		}
 
 		cfg.LLMs["groq"] = config.LLMConfig{

@@ -20,7 +20,7 @@ request_timeout_seconds = 45
 
 [llms.ollama]
 base_url = "http://localhost:11434"
-model = "llama3"
+model = "gemma:2b"
 
 [llms.gemini]
 api_key = "test-gemini-key"
@@ -55,8 +55,8 @@ model = "gemini-1.5-pro"
 		t.Errorf("Expected ollama base URL 'http://localhost:11434', got '%s'", ollamaConfig.BaseURL)
 	}
 
-	if ollamaConfig.Model != "llama3" {
-		t.Errorf("Expected ollama model 'llama3', got '%s'", ollamaConfig.Model)
+	if ollamaConfig.Model != "gemma:2b" {
+		t.Errorf("Expected ollama model 'gemma:2b', got '%s'", ollamaConfig.Model)
 	}
 
 	// Check gemini config
@@ -121,7 +121,7 @@ func TestSaveConfigToFile(t *testing.T) {
 		},
 		"ollama": {
 			BaseURL: "http://localhost:11434",
-			Model:   "llama3",
+			Model:   "gemma:2b",
 		},
 	})
 
@@ -180,7 +180,7 @@ func TestValidateConfigForCLI(t *testing.T) {
 		{
 			name: "valid config",
 			config: config.NewConfig("ollama", 30, map[string]config.LLMConfig{
-				"ollama": {BaseURL: "http://localhost:11434", Model: "llama3"},
+				"ollama": {BaseURL: "http://localhost:11434", Model: "gemma:2b"},
 			}),
 			expectError: false,
 		},
@@ -229,7 +229,7 @@ func TestValidateConfigForCLI(t *testing.T) {
 				DefaultProvider:       "ollama",
 				RequestTimeoutSeconds: 30,
 				LLMs: map[string]config.LLMConfig{
-					"ollama": {Model: "llama3"}, // Missing base URL
+					"ollama": {Model: "gemma:2b"}, // Missing base URL
 				},
 			},
 			expectError: true,
@@ -331,7 +331,7 @@ func TestMergeConfigs(t *testing.T) {
 		DefaultProvider:       "ollama",
 		RequestTimeoutSeconds: 30,
 		LLMs: map[string]config.LLMConfig{
-			"ollama": {BaseURL: "http://localhost:11434", Model: "llama3"},
+			"ollama": {BaseURL: "http://localhost:11434", Model: "gemma:2b"},
 		},
 	}
 

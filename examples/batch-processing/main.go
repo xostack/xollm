@@ -46,10 +46,10 @@ type BatchStatistics struct {
 
 // BatchProcessor manages concurrent processing of multiple LLM jobs
 type BatchProcessor struct {
-	config      config.Config    // LLM configuration
-	workerCount int              // Number of concurrent workers
-	stats       BatchStatistics  // Processing statistics
-	mutex       sync.RWMutex     // For thread-safe access to statistics
+	config      config.Config   // LLM configuration
+	workerCount int             // Number of concurrent workers
+	stats       BatchStatistics // Processing statistics
+	mutex       sync.RWMutex    // For thread-safe access to statistics
 }
 
 // NewBatchProcessor creates a new batch processor with the specified number of workers
@@ -142,7 +142,7 @@ func (bp *BatchProcessor) ProcessJobs(ctx context.Context, jobs []BatchJob) ([]B
 
 	for result := range resultChan {
 		results = append(results, result)
-		
+
 		// Update statistics
 		bp.mutex.Lock()
 		if result.Error == nil {
@@ -245,7 +245,7 @@ func createJobsFromFile(filename string) ([]BatchJob, error) {
 
 	var prompts []string
 	scanner := bufio.NewScanner(file)
-	
+
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 		// Skip empty lines and comments
@@ -283,11 +283,11 @@ func generateReport(results []BatchResult, stats BatchStatistics) string {
 	report.WriteString("-----------\n")
 	report.WriteString(fmt.Sprintf("Total duration: %v\n", stats.TotalDuration.Round(time.Millisecond)))
 	report.WriteString(fmt.Sprintf("Average per job: %v\n", stats.AverageDuration.Round(time.Millisecond)))
-	
+
 	if !stats.StartTime.IsZero() && !stats.EndTime.IsZero() {
 		wallTime := stats.EndTime.Sub(stats.StartTime)
 		report.WriteString(fmt.Sprintf("Wall clock time: %v\n", wallTime.Round(time.Millisecond)))
-		
+
 		if wallTime > 0 {
 			throughput := float64(stats.TotalJobs) / wallTime.Seconds()
 			report.WriteString(fmt.Sprintf("Throughput: %.2f jobs/second\n", throughput))
@@ -308,9 +308,9 @@ func generateReport(results []BatchResult, stats BatchStatistics) string {
 
 	for _, result := range sortedResults {
 		if result.Error == nil {
-			report.WriteString(fmt.Sprintf("✓ %s: %dms (worker %d)\n", 
+			report.WriteString(fmt.Sprintf("✓ %s: %dms (worker %d)\n",
 				result.Job.ID, result.Duration.Milliseconds(), result.Worker))
-			
+
 			// Truncate long responses for readability
 			response := result.Response
 			if len(response) > 100 {
@@ -319,7 +319,7 @@ func generateReport(results []BatchResult, stats BatchStatistics) string {
 			response = strings.ReplaceAll(response, "\n", " ")
 			report.WriteString(fmt.Sprintf("  Response: %s\n", response))
 		} else {
-			report.WriteString(fmt.Sprintf("✗ %s: FAILED (worker %d)\n", 
+			report.WriteString(fmt.Sprintf("✗ %s: FAILED (worker %d)\n",
 				result.Job.ID, result.Worker))
 			report.WriteString(fmt.Sprintf("  Error: %s\n", result.Error.Error()))
 		}
@@ -342,7 +342,7 @@ func saveResultsToFile(results []BatchResult, filename string) error {
 		file.WriteString("  {\n")
 		file.WriteString(fmt.Sprintf("    \"id\": \"%s\",\n", result.Job.ID))
 		file.WriteString(fmt.Sprintf("    \"prompt\": \"%s\",\n", strings.ReplaceAll(result.Job.Prompt, "\"", "\\\"")))
-		
+
 		if result.Error == nil {
 			file.WriteString(fmt.Sprintf("    \"response\": \"%s\",\n", strings.ReplaceAll(result.Response, "\"", "\\\"")))
 			file.WriteString("    \"success\": true,\n")
@@ -350,10 +350,10 @@ func saveResultsToFile(results []BatchResult, filename string) error {
 			file.WriteString(fmt.Sprintf("    \"error\": \"%s\",\n", strings.ReplaceAll(result.Error.Error(), "\"", "\\\"")))
 			file.WriteString("    \"success\": false,\n")
 		}
-		
+
 		file.WriteString(fmt.Sprintf("    \"duration_ms\": %d,\n", result.Duration.Milliseconds()))
 		file.WriteString(fmt.Sprintf("    \"worker\": %d\n", result.Worker))
-		
+
 		if i < len(results)-1 {
 			file.WriteString("  },\n")
 		} else {
@@ -385,7 +385,7 @@ func demonstrateBatchProcessing() error {
 		cfg = config.NewConfig("ollama", *timeout, map[string]config.LLMConfig{
 			"ollama": {
 				BaseURL: getEnvOrDefault("OLLAMA_BASE_URL", "http://localhost:11434"),
-				Model:   getEnvOrDefault("OLLAMA_MODEL", "llama3"),
+				Model:   getEnvOrDefault("OLLAMA_MODEL", "gemma:2b"),
 			},
 		})
 	case "gemini":
@@ -407,7 +407,7 @@ func demonstrateBatchProcessing() error {
 		cfg = config.NewConfig("groq", *timeout, map[string]config.LLMConfig{
 			"groq": {
 				APIKey: apiKey,
-				Model:  getEnvOrDefault("GROQ_MODEL", "llama3-8b-8192"),
+				Model:  getEnvOrDefault("GROQ_MODEL", "gemma:2b-8b-8192"),
 			},
 		})
 	default:
@@ -461,7 +461,7 @@ func demonstrateBatchProcessing() error {
 	processor := NewBatchProcessor(cfg, *workers)
 	defer processor.Close()
 
-	fmt.Printf("Processing %d jobs with %d workers using %s provider...\n", 
+	fmt.Printf("Processing %d jobs with %d workers using %s provider...\n",
 		len(jobs), *workers, cfg.DefaultProvider)
 
 	// Process jobs
@@ -477,12 +477,12 @@ func demonstrateBatchProcessing() error {
 	if *showProgress {
 		progressTicker = time.NewTicker(1 * time.Second)
 		defer progressTicker.Stop()
-		
+
 		go func() {
 			for range progressTicker.C {
 				stats := processor.GetStatistics()
 				completed := stats.CompletedJobs + stats.FailedJobs
-				fmt.Printf("\rProgress: %d/%d jobs completed (%.1f%%)", 
+				fmt.Printf("\rProgress: %d/%d jobs completed (%.1f%%)",
 					completed, len(jobs), float64(completed)/float64(len(jobs))*100)
 			}
 		}()
@@ -506,8 +506,8 @@ func demonstrateBatchProcessing() error {
 	stats.EndTime = start.Add(totalTime) // Ensure end time is set
 
 	fmt.Printf("\nBatch processing completed in %v\n", totalTime.Round(time.Millisecond))
-	fmt.Printf("Completed: %d/%d jobs (%.1f%% success rate)\n", 
-		stats.CompletedJobs, stats.TotalJobs, 
+	fmt.Printf("Completed: %d/%d jobs (%.1f%% success rate)\n",
+		stats.CompletedJobs, stats.TotalJobs,
 		float64(stats.CompletedJobs)/float64(stats.TotalJobs)*100)
 
 	if stats.FailedJobs > 0 {

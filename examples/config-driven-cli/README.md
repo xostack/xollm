@@ -62,7 +62,7 @@ request_timeout_seconds = 60
 # Ollama configuration (self-hosted)
 [llms.ollama]
 base_url = "http://localhost:11434"
-model = "llama3"
+model = "gemma:2b"
 
 # Google Gemini configuration  
 [llms.gemini]
@@ -72,7 +72,7 @@ model = "gemini-1.5-flash-latest"
 # Groq configuration
 [llms.groq]
 api_key = "your-groq-api-key"
-model = "llama3-8b-8192"
+model = "gemma:2b-8b-8192"
 ```
 
 ## Configuration File Locations
@@ -145,7 +145,7 @@ The interactive setup can use environment variables for API keys:
 export GEMINI_API_KEY="your-gemini-api-key"
 export GROQ_API_KEY="your-groq-api-key"
 export OLLAMA_BASE_URL="http://localhost:11434"
-export OLLAMA_MODEL="llama3"
+export OLLAMA_MODEL="gemma:2b"
 ```
 
 ## Example Workflows
@@ -208,7 +208,7 @@ request_timeout_seconds = 60
 
 [llms.ollama]
 base_url = "http://localhost:11434"
-model = "llama3"
+model = "gemma:2b"
 ```
 
 Production config (`prod.toml`):

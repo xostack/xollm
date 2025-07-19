@@ -74,7 +74,7 @@ export GROQ_API_KEY="your-groq-api-key"
 
 # Optional: customize Ollama
 export OLLAMA_BASE_URL="http://localhost:11434"
-export OLLAMA_MODEL="llama3"
+export OLLAMA_MODEL="gemma:2b"
 ```
 
 ### Command Line Options

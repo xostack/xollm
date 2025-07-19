@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	defaultOllamaModel = "llama3" // A common default, user can override in config
+	defaultOllamaModel = "gemma:2b" // A common default, user can override in config
 	providerName       = "ollama"
 	generateAPIPath    = "/api/generate"
 )

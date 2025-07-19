@@ -61,7 +61,7 @@ func mockGetClient(cfg config.Config, debugMode bool) (xollm.Client, error) {
 
 func TestNewConversation(t *testing.T) {
 	cfg := config.NewConfig("ollama", 30, map[string]config.LLMConfig{
-		"ollama": {BaseURL: "http://localhost:11434", Model: "llama3"},
+		"ollama": {BaseURL: "http://localhost:11434", Model: "gemma:2b"},
 	})
 
 	conv := NewConversation(cfg, "test-bot")

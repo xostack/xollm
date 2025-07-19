@@ -94,7 +94,7 @@ func createSampleConfigs() map[string]config.Config {
 	configs["ollama"] = config.NewConfig("ollama", 60, map[string]config.LLMConfig{
 		"ollama": {
 			BaseURL: "http://localhost:11434",
-			Model:   "llama3",
+			Model:   "gemma:2b",
 		},
 	})
 
@@ -110,7 +110,7 @@ func createSampleConfigs() map[string]config.Config {
 	configs["groq"] = config.NewConfig("groq", 60, map[string]config.LLMConfig{
 		"groq": {
 			APIKey: getEnvOrDefault("GROQ_API_KEY", "your-groq-api-key"),
-			Model:  "llama3-8b-8192",
+			Model:  "gemma:2b-8b-8192",
 		},
 	})
 
